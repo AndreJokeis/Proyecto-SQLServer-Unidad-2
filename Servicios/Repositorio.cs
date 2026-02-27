@@ -19,6 +19,7 @@ namespace Ordenes.Servicios
                 try
                 {
                     connection.Open();
+                    //System.Diagnostics.Debug.WriteLine("Estado de conexión: " + connection.State);
 
                     SqlCommand cmd = new SqlCommand("get_vehiculos", connection);
                     cmd.CommandType = CommandType.StoredProcedure;
@@ -66,7 +67,8 @@ namespace Ordenes.Servicios
                 try
                 {
                     connection.Open();
-                    
+                    //System.Diagnostics.Debug.WriteLine("Estado de conexión: " + connection.State);
+
                     SqlCommand cmd = new SqlCommand("get_vehiculo", connection);
                     cmd.CommandType = CommandType.StoredProcedure;
 
@@ -149,7 +151,7 @@ namespace Ordenes.Servicios
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine(ex.Message);
+                    Console.WriteLine("excepcion en cliente"+ex.Message);
                     return null;
                 }
             }

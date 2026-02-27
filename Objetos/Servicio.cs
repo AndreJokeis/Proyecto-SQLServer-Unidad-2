@@ -10,8 +10,19 @@ namespace Ordenes.Objetos
         public int idServicio { get; set; }
         public string NombreServicio { get; set; }
         public string Descripcion { get; set; }
+        public int Cantidad { get; set; }
         public decimal Costo { get; set; }
         public decimal TiempoEstimado { get; set; }
+
+        public Servicio(int idServicio, string NombreServicio, string Descripcion, int Cantidad, decimal Costo, decimal TiempoEstimado)
+        {
+            this.idServicio = idServicio;
+            this.NombreServicio = NombreServicio;
+            this.Descripcion = Descripcion;
+            this.Cantidad = Cantidad;
+            this.Costo = Costo;
+            this.TiempoEstimado = TiempoEstimado;
+        }
 
         public Servicio(int idServicio, string NombreServicio, string Descripcion, decimal Costo, decimal TiempoEstimado)
         {

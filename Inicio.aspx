@@ -7,7 +7,9 @@
     <title>Taller André - Nueva Orden</title>
     
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="../Content/EstilosTaller.css" rel="stylesheet" />
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
 </head>
 <body>
     <form id="form1" runat="server">
@@ -93,6 +95,7 @@
                                         <asp:TableHeaderCell>ID</asp:TableHeaderCell>
                                         <asp:TableHeaderCell>Servicio</asp:TableHeaderCell>
                                         <asp:TableHeaderCell>Descripción</asp:TableHeaderCell>
+                                        <asp:TableHeaderCell>Cantidad</asp:TableHeaderCell>
                                         <asp:TableHeaderCell>Costo</asp:TableHeaderCell>
                                         <asp:TableHeaderCell>Tiempo</asp:TableHeaderCell>
                                     </asp:TableHeaderRow>

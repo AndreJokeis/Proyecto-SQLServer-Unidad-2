@@ -4,6 +4,8 @@ USE tallermecanico;
 
 select * from tallermecanico.INFORMATION_SCHEMA.TABLES;
 
+select * from tallermecanico.INFORMATION_SCHEMA.COLUMNS;
+
 CREATE TABLE clientes(
     idCliente INT IDENTITY(1,1) PRIMARY KEY NOT NULL,
     RFC CHAR(13) NOT NULL UNIQUE,
@@ -45,7 +47,7 @@ CREATE TABLE servicios(
     idServicio INT IDENTITY(1,1) PRIMARY KEY NOT NULL,
     NombreServicio NVARCHAR(50) NOT NULL,
     Descripcion NVARCHAR(MAX),
-    Costo DECIMAL(9,2) NOT NULL,
+    Costo DECIMAL(7,2) NOT NULL,
     TiempoEstimado DECIMAL(3,1) NOT NULL
 );
 
@@ -53,11 +55,12 @@ CREATE TABLE refacciones(
     idRefaccion INT IDENTITY(1,1) PRIMARY KEY NOT NULL,
     Nombre NVARCHAR(50) NOT NULL,
     Marca NVARCHAR(20) NOT NULL,
-    PrecioUnitario DECIMAL(7,2) NOT NULL,
+    PrecioUnitario DECIMAL(15,2) NOT NULL,
     Stock INT NOT NULL CHECK (Stock >= 0),
     StockMinimo INT NOT NULL CHECK (StockMinimo >= 0),
-    Proveedor NVARCHAR(50) NOT NULL
+    Proveedor NVARCHAR(50) NOT NULL    
 );
+    
 
 CREATE TABLE orden_servicios(
     Folio INT IDENTITY(1,1) PRIMARY KEY NOT NULL,
@@ -213,16 +216,17 @@ BEGIN
     INSERT INTO Orden_Servicios (idCliente, numSerie, fecha)
     VALUES (@idCliente, @numSerie, GETDATE());
 
-    -- Esta línea es vital para devolver el ID a C#
+    
     SELECT SCOPE_IDENTITY();
 END
+
 
 -- Insertar orden
 GO
 CREATE PROCEDURE sp_InsertarOrden
     @fechaEntrega DATE,
     @numSerie INT,
-    @costoTotal DECIMAL(8,2)
+    @costoTotal DECIMAL(18,2)
 AS
 BEGIN
     SET NOCOUNT ON;
@@ -237,7 +241,7 @@ GO
 CREATE PROCEDURE sp_InsertarDetalleOrden
     @idFolio INT,
     @idServicio INT,
-    @precio DECIMAL(8,2)
+    @precio DECIMAL(18,2)
 AS
 BEGIN
     SET NOCOUNT ON;
@@ -246,3 +250,24 @@ BEGIN
     VALUES (@idFolio, @idServicio, @precio);
 END
 GO
+
+
+-- ampliar Salario de Mecánicos
+ALTER TABLE mecanicos 
+ALTER COLUMN Salario DECIMAL(18,2) NOT NULL;
+
+-- Ampliar Costo de Servicios
+ALTER TABLE servicios 
+ALTER COLUMN Costo DECIMAL(18,2) NOT NULL;
+
+-- Ampliar PrecioUnitario de Refacciones
+ALTER TABLE refacciones 
+ALTER COLUMN PrecioUnitario DECIMAL(18,2) NOT NULL;
+
+-- Ampliar CostoTotal de la Orden
+ALTER TABLE orden_servicios 
+ALTER COLUMN CostoTotal DECIMAL(18,2);
+
+-- Ampliar PrecioAplicado en los detalles
+ALTER TABLE detalles_orden 
+ALTER COLUMN PrecioAplicado DECIMAL(18,2);
